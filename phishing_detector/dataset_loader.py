@@ -17,20 +17,44 @@ class DatasetLoader:
 
     def load_email_dataset(self) -> pd.DataFrame:
         dataset_path = self.config.datasets_dir / "ceas_08.csv"
-        print(f"Dataset path generated {dataset_path}")
         
         if dataset_path.exists():
-            print(f"Loading email dataset from {dataset_path}")
+            print(f"Loading email dataset from {dataset_path}", end="\n\n")
             return pd.read_csv(dataset_path)
-        print(f"Creating synthetic email dataset")
+          
+        print(f"Creating synthetic email dataset", end="\n\n")
         return self._create_synthetic_email_dataset()
 
-    def load_url_dataset(self) -> pd.DataFrame:
+    def load_phishtank_dataset(self) -> pd.DataFrame:
         dataset_path = self.config.datasets_dir / "phishtank_urls.csv"
+        
         if dataset_path.exists():
+            print(f"Loading phishing url dataset from {dataset_path}", end="\n\n")
             return pd.read_csv(dataset_path)
-        return self._create_synthetic_url_dataset()
+          
+        print(f"Creating synthetic phishing url dataset", end="\n\n")
+        return self._create_synthetic_phish_dataset()
+      
+    def load_majestic_dataset(self) -> pd.DataFrame:
+        dataset_path = self.config.datasets_dir / "majestic_million.csv"
+        
+        if dataset_path.exists():
+            print(f"Loading legitim url dataset from {dataset_path}", end="\n\n")
+            return pd.read_csv(dataset_path)
+          
+        print(f"Creating synthetic legitimate url dataset", end="\n\n")
+        return self._create_synthetic_legitim_dataset()
 
+    def load_malicious_phish_dataset(self) -> pd.DataFrame:
+        dataset_path = self.config.datasets_dir / "malicious_phish.csv"
+        
+        if dataset_path.exists():
+            print(f"Loading malicious and legitimate url dataset from {dataset_path}", end="\n\n")
+            return pd.read_csv(dataset_path)
+          
+        print(f"Creating synthetic malicious and legitimate url dataset", end="\n\n")
+        return self._create_synthetic_legitim_dataset()
+    
     def _create_synthetic_email_dataset(self) -> pd.DataFrame:
         records = [
             {"sender": "alice@example.com", "subject": "Invoice", "body": "Please review the attached invoice", "label": 0},
@@ -42,13 +66,24 @@ class DatasetLoader:
         ]
         return pd.DataFrame(records)
 
-    def _create_synthetic_url_dataset(self) -> pd.DataFrame:
+    def _create_synthetic_phish_dataset(self) -> pd.DataFrame:
         records = [
-            {"url": "https://example.com/login", "label": 0},
-            {"url": "https://secure-payment.example.com/checkout", "label": 0},
-            {"url": "https://login.verify-account-now.com", "label": 1},
-            {"url": "http://paypal-secure-update.net/confirm", "label": 1},
-            {"url": "https://docs.example.org", "label": 0},
-            {"url": "https://amazon-account-verification.info", "label": 1},
+            {"URL": "https://example.com/login", "Label": 1},
+            {"URL": "https://secure-payment.example.com/checkout", "Label": 1},
+            {"URL": "https://login.verify-account-now.com", "Label": 1},
+            {"URL": "http://paypal-secure-update.net/confirm", "Label": 1},
+            {"URL": "https://docs.example.org", "Label": 1},
+            {"URL": "https://amazon-account-verification.info", "Label": 1},
+        ]
+        return pd.DataFrame(records)
+
+    def _create_synthetic_legitim_dataset(self) -> pd.DataFrame:
+        records = [
+            {"URL": "google.com", "Label": 0},
+            {"URL": "ufrgs.br", "Label": 0},
+            {"URL": "microsoft.com", "Label": 0},
+            {"URL": "amazon.com", "Label": 0},
+            {"URL": "facebook.com", "Label": 0},
+            {"URL": "instagram.com", "Label": 0},
         ]
         return pd.DataFrame(records)

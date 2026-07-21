@@ -1,11 +1,36 @@
 from __future__ import annotations
 
 import re
-from typing import Any
-
-import numpy as np
 import torch
 
+from urllib.parse import urlparse
+
+
+def normalize_url(url: str) -> str:
+    url = url.strip().lower()
+
+    # adiciona protocolo se não existir
+    if not url.startswith(("http://", "https://")):
+        url = "https://" + url
+
+    parsed = urlparse(url)
+
+    scheme = parsed.scheme
+    netloc = parsed.netloc
+
+    # remove www.
+    if netloc.startswith("www."):
+        netloc = netloc[4:]
+
+    path = parsed.path
+    query = parsed.query
+
+    normalized = f"{scheme}://{netloc}{path}"
+
+    if query:
+        normalized += f"?{query}"
+
+    return normalized
 
 class URLPreprocessor:
     """Prepare URL strings for character-level CNN training and inference."""
@@ -40,3 +65,5 @@ class URLPreprocessor:
         alphabet = list("abcdefghijklmnopqrstuvwxyz0123456789:/._-?=&%#@")
         chars = ["<PAD>", "<UNK>"] + alphabet
         return {char: idx for idx, char in enumerate(chars)}
+
+    

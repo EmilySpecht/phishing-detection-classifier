@@ -16,7 +16,11 @@ This project implements a modular phishing detection pipeline with three trained
 
 ## Quick start
 
+Activate the virtual env:
+
+```bash
 source .venv/bin/activate
+```
 
 Install dependencies:
 
