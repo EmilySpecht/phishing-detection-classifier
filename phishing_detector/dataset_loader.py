@@ -55,6 +55,17 @@ class DatasetLoader:
         print(f"Creating synthetic malicious and legitimate url dataset", end="\n\n")
         return self._create_synthetic_legitim_dataset()
     
+    
+    def load_phiusiil_dataset(self) -> pd.DataFrame:
+        dataset_path = self.config.datasets_dir / "phiusiil.csv"
+        
+        if dataset_path.exists():
+            print(f"Loading malicious and legitimate url dataset from {dataset_path}", end="\n\n")
+            return pd.read_csv(dataset_path)
+            
+        print(f"Creating synthetic malicious and legitimate url dataset", end="\n\n")
+        return self._create_synthetic_legitim_dataset()
+    
     def _create_synthetic_email_dataset(self) -> pd.DataFrame:
         records = [
             {"sender": "alice@example.com", "subject": "Invoice", "body": "Please review the attached invoice", "label": 0},

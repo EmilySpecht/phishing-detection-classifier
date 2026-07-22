@@ -33,8 +33,11 @@ def predict_email(
     email_features = tfidf_model.transform([email_text])
     email_score = float(email_model.predict_proba(email_features)[0])
     
-    url = normalize_url(url)
+    # url = normalize_url(url)
     url_score = float(url_model.predict_proba([url])[0])
+    
+    print(f"URL: {url}")
+    print(f"URL score bruto: {url_score}")
     
     
     # Por enquanto temos uma média simples, mas é interessante 

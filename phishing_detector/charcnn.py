@@ -66,7 +66,9 @@ class URLCharCNNModel:
         loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
         self.model.train()
 
-        for _ in range(epochs):
+        for epoch in range(epochs):
+            epoch_loss = 0.0
+            
             for inputs, target in loader:
                 inputs = inputs.to(self.device)
                 target = target.to(self.device)
@@ -75,6 +77,10 @@ class URLCharCNNModel:
                 loss = self.criterion(outputs.squeeze(1), target.squeeze(1))
                 loss.backward()
                 self.optimizer.step()
+                
+                epoch_loss += loss.item()
+
+            print(f"Epoch {epoch+1}: {epoch_loss / len(loader):.4f}")
 
     def predict_proba(self, urls: list[str]) -> list[float]:
         self.model.eval()
