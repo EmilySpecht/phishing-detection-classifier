@@ -24,6 +24,16 @@ class DatasetLoader:
           
         print(f"Creating synthetic email dataset", end="\n\n")
         return self._create_synthetic_email_dataset()
+    
+    def load_nazario_dataset(self) -> pd.DataFrame:
+        dataset_path = self.config.datasets_dir / "nazario_5.csv"
+        
+        if dataset_path.exists():
+            print(f"Loading email dataset from {dataset_path}", end="\n\n")
+            return pd.read_csv(dataset_path)
+            
+        print(f"Creating synthetic email dataset", end="\n\n")
+        return self._create_synthetic_email_dataset()
 
     def load_phishtank_dataset(self) -> pd.DataFrame:
         dataset_path = self.config.datasets_dir / "phishtank_urls.csv"

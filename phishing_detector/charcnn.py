@@ -61,7 +61,7 @@ class URLCharCNNModel:
         self.optimizer = optim.Adam(self.model.parameters(), lr=1e-3)
         self.criterion = nn.BCELoss()
 
-    def fit(self, urls: list[str], labels: list[int], epochs: int = 8, batch_size: int = 16) -> None:
+    def fit(self, urls: list[str], labels: list[int], epochs: int = 10, batch_size: int = 16) -> None:
         dataset = URLDataset(urls, labels, self.preprocessor)
         loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
         self.model.train()
@@ -79,8 +79,12 @@ class URLCharCNNModel:
                 self.optimizer.step()
                 
                 epoch_loss += loss.item()
+                
+            loss = epoch_loss / len(loader)
 
-            print(f"Epoch {epoch+1}: {epoch_loss / len(loader):.4f}")
+            print(
+                f"Epoch loss (erro) {epoch + 1}: {loss:.4f} {'✅' if loss < 0.28 else '❌'}"
+            )
 
     def predict_proba(self, urls: list[str]) -> list[float]:
         self.model.eval()

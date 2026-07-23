@@ -6,8 +6,9 @@ from typing import Any
 import pandas as pd
 
 
+
 class EmailPreprocessor:
-    """Clean and normalize email text fields for training and inference."""
+    """Limpa e padroniza os campos textuais de um e-mail antes de serem usados no treinamento ou na inferência"""
 
     def __init__(self) -> None:
         self._html_tag_pattern = re.compile(r"<[^>]+>")

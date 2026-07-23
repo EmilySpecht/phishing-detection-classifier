@@ -5,11 +5,11 @@ from xgboost import XGBClassifier
 
 
 class EmailBranchModel:
-    """XGBoost classifier for the email-text branch."""
+    """XGBoost classificador para branch de email (texto)"""
 
     def __init__(self) -> None:
         self.model = XGBClassifier(
-            n_estimators=100,
+            n_estimators=200,
             max_depth=4,
             learning_rate=0.1,
             objective="binary:logistic",

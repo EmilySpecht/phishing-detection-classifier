@@ -12,13 +12,18 @@ def main() -> None:
     config = get_config()
     trainer = PhishingTrainer(config)
 
-    email_df, phish_df, phiusiil_df = trainer.load_datasets()
-    training_summary = trainer.train_all(email_df, phish_df, phiusiil_df)
+    email_df, phish_df, phiusiil_df, nazario_df = trainer.load_datasets()
+    training_summary = trainer.train_all(email_df, phish_df, phiusiil_df, nazario_df)
 
     print("Training completed successfully.")
-    print(f"Email branch accuracy: {training_summary['email_metrics']['accuracy']:.4f}")
-    print(f"URL branch accuracy: {training_summary['url_metrics']['accuracy']:.4f}")
 
+    print("Email branch metrics:")
+    for metric, value in training_summary["email_metrics"].items():
+        print(f"  {metric}: {value:.4f}")
+
+    print("URL branch metrics:")
+    for metric, value in training_summary["url_metrics"].items():
+        print(f"  {metric}: {value:.4f}")
 
     for sample_data in samples:
         result = predict_email(
